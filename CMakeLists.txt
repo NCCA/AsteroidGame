@@ -27,7 +27,13 @@ set(CMAKE_CXX_EXTENSIONS ON)
 
 target_sources(${TargetName} PRIVATE 
 ${PROJECT_SOURCE_DIR}/src/main.cpp  
-${PROJECT_SOURCE_DIR}/src/NGLDraw.cpp  
+${PROJECT_SOURCE_DIR}/src/Game.cpp  
+${PROJECT_SOURCE_DIR}/src/Ship.cpp  
+${PROJECT_SOURCE_DIR}/include/Game.h  
+${PROJECT_SOURCE_DIR}/include/Ship.h
+
+
+
 			)
 target_link_libraries(${TargetName} PRIVATE  NGL)
 # Link in the SDL2 libraries

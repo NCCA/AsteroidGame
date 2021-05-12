@@ -4,8 +4,8 @@
 #include <SDL.h>
 #include <cstdlib>
 #include <iostream>
-#include "NGLDraw.h"
 #include <ngl/NGLInit.h>
+#include "Game.h"
 
 /// @brief function to quit SDL with error message
 /// @param[in] _msg the error message to send
@@ -29,14 +29,13 @@ int main(int argc, char * argv[])
   }
 
   // now get the size of the display and create a window we need to init the video
-  SDL_Rect rect;
-  SDL_GetDisplayBounds(0,&rect);
+  const int windowSize=800;
   // now create our window
   SDL_Window *window=SDL_CreateWindow("SDLNGL",
                                       SDL_WINDOWPOS_CENTERED,
                                       SDL_WINDOWPOS_CENTERED,
-                                      rect.w/2,
-                                      rect.h/2,
+                                      windowSize,
+                                      windowSize,
                                       SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE
                                      );
   // check to see if that worked or exit
@@ -60,6 +59,9 @@ int main(int argc, char * argv[])
   // be done once we have a valid GL context but before we call any GL commands. If we dont do
   // this everything will crash
   ngl::NGLInit::initialize();
+  
+  Game game(windowSize);
+  
   // now clear the screen and swap whilst NGL inits (which may take time)
   glClear(GL_COLOR_BUFFER_BIT);
   SDL_GL_SwapWindow(window);
@@ -67,12 +69,6 @@ int main(int argc, char * argv[])
   bool quit=false;
   // sdl event processing data structure
   SDL_Event event;
-  // now we create an instance of our ngl class, this will init NGL and setup basic
-  // opengl stuff ext. When this falls out of scope the dtor will be called and cleanup
-  // our gl stuff
-  NGLDraw ngl;
-  // resize the ngl to set the screen size and camera stuff
-  ngl.resize(rect.w,rect.h);
   while(!quit)
   {
 
@@ -83,17 +79,16 @@ int main(int argc, char * argv[])
         // this is the window x being clicked.
         case SDL_QUIT : quit = true; break;
         // process the mouse data by passing it to ngl class
-        case SDL_MOUSEMOTION : ngl.mouseMoveEvent(event.motion); break;
-        case SDL_MOUSEBUTTONDOWN : ngl.mousePressEvent(event.button); break;
-        case SDL_MOUSEBUTTONUP : ngl.mouseReleaseEvent(event.button); break;
-        case SDL_MOUSEWHEEL : ngl.wheelEvent(event.wheel); break;
+        case SDL_MOUSEMOTION :  break;
+        case SDL_MOUSEBUTTONDOWN :  break;
+        case SDL_MOUSEBUTTONUP : break;
+        case SDL_MOUSEWHEEL : break;
         // if the window is re-sized pass it to the ngl class to change gl viewport
         // note this is slow as the context is re-create by SDL each time
         case SDL_WINDOWEVENT :
           int w,h;
           // get the new window size
           SDL_GetWindowSize(window,&w,&h);
-          ngl.resize(w,h);
         break;
 
         // now we look for a keydown event
@@ -103,11 +98,9 @@ int main(int argc, char * argv[])
           {
             // if it's the escape key quit
             case SDLK_ESCAPE :  quit = true; break;
-            case SDLK_w : glPolygonMode(GL_FRONT_AND_BACK,GL_LINE); break;
-            case SDLK_s : glPolygonMode(GL_FRONT_AND_BACK,GL_FILL); break;
             case SDLK_f :
             SDL_SetWindowFullscreen(window,SDL_TRUE);
-            glViewport(0,0,rect.w,rect.h);
+            glViewport(0,0,windowSize,windowSize);
             break;
 
             case SDLK_g : SDL_SetWindowFullscreen(window,SDL_FALSE); break;
@@ -120,8 +113,9 @@ int main(int argc, char * argv[])
       } // end of event switch
     } // end of poll events
 
-    // now we draw ngl
-    ngl.draw();
+    game.update();
+    game.draw();
+
     // swap the buffers
     SDL_GL_SwapWindow(window);
 
