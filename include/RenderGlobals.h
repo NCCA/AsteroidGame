@@ -9,6 +9,7 @@ class RenderGlobals
     static ngl::Mat4 getViewMatrix();
     static ngl::Mat4 getProjectionMatrix();
     static ngl::Mat4 getVPMatrix();
+    static int getSize() { return s_size;}
   private :
     static int s_size;
     static bool s_isInitialized;

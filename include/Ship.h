@@ -12,9 +12,13 @@ class Ship
     void draw();
     void update();
     void updateRotation(float _rotation);
+    ngl::Vec3 getPos() const;
+    float getRadius() const;
   private :
     ngl::Vec3 m_pos;
     float m_rot=0;
+    float m_radius=1.0f;
+
 };
 
 

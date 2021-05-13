@@ -30,13 +30,12 @@ ${PROJECT_SOURCE_DIR}/src/main.cpp
 ${PROJECT_SOURCE_DIR}/src/Game.cpp  
 ${PROJECT_SOURCE_DIR}/src/Ship.cpp  
 ${PROJECT_SOURCE_DIR}/src/RenderGlobals.cpp  
+${PROJECT_SOURCE_DIR}/src/Rock.cpp  
 ${PROJECT_SOURCE_DIR}/include/Game.h  
 ${PROJECT_SOURCE_DIR}/include/Ship.h
 ${PROJECT_SOURCE_DIR}/include/RenderGlobals.h
-
-
-
-			)
+${PROJECT_SOURCE_DIR}/include/Rock.h
+)
 target_link_libraries(${TargetName} PRIVATE  NGL)
 # Link in the SDL2 libraries
 target_link_libraries(${TargetName} PRIVATE  SDL2::SDL2-static)

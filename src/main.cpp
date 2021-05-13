@@ -29,7 +29,7 @@ int main(int argc, char * argv[])
   }
 
   // now get the size of the display and create a window we need to init the video
-  const int windowSize=800;
+  const int windowSize=400;
   // now create our window
   SDL_Window *window=SDL_CreateWindow("SDLNGL",
                                       SDL_WINDOWPOS_CENTERED,

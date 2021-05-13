@@ -20,7 +20,15 @@ void Ship::updateRotation(float _rotation)
   m_rot+=_rotation;
 }
 
+ngl::Vec3 Ship::getPos() const
+{
+  return m_pos;
+}
 
+float Ship::getRadius() const
+{
+  return m_radius;
+}
 
 void Ship::draw()
 {
