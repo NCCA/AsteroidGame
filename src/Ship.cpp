@@ -15,6 +15,13 @@ void Ship::setPos(const ngl::Vec3 &_p)
   m_pos=_p;
 }
 
+void Ship::updateRotation(float _rotation)
+{
+  m_rot+=_rotation;
+}
+
+
+
 void Ship::draw()
 {
   ngl::ShaderLib::use(ngl::nglColourShader);
@@ -22,6 +29,7 @@ void Ship::draw()
   ngl::Transformation tx;
   tx.setPosition(m_pos);
   tx.setScale(4.0f,4.0f,4.0f);
+  tx.setRotation(0,m_rot,0);
   ngl::ShaderLib::setUniform("MVP", RenderGlobals::getVPMatrix()* tx.getMatrix() );
   // std::cout<<RenderGlobals::getVPMatrix()<<'\n';
   // std::cout<<RenderGlobals::getViewMatrix()<<'\n';

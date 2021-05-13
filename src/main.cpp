@@ -69,9 +69,10 @@ int main(int argc, char * argv[])
   bool quit=false;
   // sdl event processing data structure
   SDL_Event event;
-  while(!quit)
-  {
+    float shipRotation=0.0f;
 
+  while(!quit) // the game loop
+  {
     while ( SDL_PollEvent(&event) )
     {
       switch (event.type)
@@ -102,17 +103,32 @@ int main(int argc, char * argv[])
             SDL_SetWindowFullscreen(window,SDL_TRUE);
             glViewport(0,0,windowSize,windowSize);
             break;
-
+            case SDLK_LEFT : shipRotation = -1.0f; break;
+            case SDLK_RIGHT : shipRotation = 1.0f; break;
             case SDLK_g : SDL_SetWindowFullscreen(window,SDL_FALSE); break;
             default : break;
           } // end of key process
         } // end of keydown
-
         break;
+
+        case SDL_KEYUP:
+        {
+          switch( event.key.keysym.sym )
+          {
+            case SDLK_LEFT : shipRotation = 0.0f; break;
+            case SDLK_RIGHT : shipRotation =0.0f; break;
+
+          }
+        }
+        break; // end key up;
+
+
+
+
       default : break;
       } // end of event switch
     } // end of poll events
-
+    game.updateShip(shipRotation);
     game.update();
     game.draw();
 

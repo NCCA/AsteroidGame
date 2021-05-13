@@ -11,6 +11,7 @@ class Ship
     void setPos(const ngl::Vec3 &_p);
     void draw();
     void update();
+    void updateRotation(float _rotation);
   private :
     ngl::Vec3 m_pos;
     float m_rot=0;

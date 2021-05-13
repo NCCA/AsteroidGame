@@ -28,3 +28,8 @@ void Game::update()
   // glClearColor(ngl::Random::randomPositiveNumber(),ngl::Random::randomPositiveNumber(),ngl::Random::randomPositiveNumber() ,1.0);
   m_ship.update();
 }
+
+void Game::updateShip(float _rotation)
+{
+  m_ship.updateRotation(_rotation);
+}
