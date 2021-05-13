@@ -12,7 +12,7 @@ Missile::Missile(const ngl::Vec3 &_pos, float _rot)
   // somthing with rot?
   m_dir.set(1.0f,0.0f,0.f);
   ngl::Mat3 rot;
-  rot.rotateY(_rot);
+  rot.rotateY(-_rot);
   m_dir = rot*m_dir;
   m_rot=_rot;
 }

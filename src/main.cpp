@@ -103,8 +103,8 @@ int main(int argc, char * argv[])
             SDL_SetWindowFullscreen(window,SDL_TRUE);
             glViewport(0,0,windowSize,windowSize);
             break;
-            case SDLK_LEFT : shipRotation = -1.0f; break;
-            case SDLK_RIGHT : shipRotation = 1.0f; break;
+            case SDLK_LEFT : shipRotation = -5.0f; break;
+            case SDLK_RIGHT : shipRotation = 5.0f; break;
             case SDLK_g : SDL_SetWindowFullscreen(window,SDL_FALSE)
             ; break;
             case SDLK_SPACE : game.changeGameState(Game::GameState::Playing); break;

@@ -10,6 +10,8 @@ class Rock
     void draw();
     void update();
     void reset();
+    void setDead(){m_isAlive=false;};
+    bool isAlive() const {return m_isAlive;}
     ngl::Vec3 getPos()const; 
     float getRadius()const; 
 

@@ -13,7 +13,7 @@ Game::Game(int _arenaSize) : m_arenaSize{_arenaSize}
   pos.m_y=0.0f; // working in x/z plane
   m_ship.setPos(pos);
   RenderGlobals g(100);
-  m_rocks.resize(5);
+  m_rocks.resize(25);
   m_text = std::make_unique<ngl::Text>("fonts/Impact_Label.ttf",24);
   m_text->setScreenSize(m_arenaSize,m_arenaSize);
 }
@@ -82,7 +82,7 @@ void Game::checkMissileCollisions()
   {
   auto mpos=m.getPos();
   float mrad=2.0f;
-    for(auto r : m_rocks)
+    for(auto &r : m_rocks)
     {
       auto rpos = r.getPos();
       auto rrad = r.getRadius();
@@ -92,6 +92,8 @@ void Game::checkMissileCollisions()
       {
         m_score++;
         m.setDead();
+        r.setDead();
+
       }
     }  
   }
@@ -114,6 +116,10 @@ void Game::checkMissileCollisions()
     m_missile.erase(std::remove_if(std::begin(m_missile), std::end(m_missile),[](auto &m){ return !m.isAlive();} ),std::end(m_missile));
   }
 
+  if(m_rocks.size() !=0)
+  {
+    m_rocks.erase(std::remove_if(std::begin(m_rocks), std::end(m_rocks),[](auto &m){ return !m.isAlive();} ),std::end(m_rocks));
+  }
 
 
 }

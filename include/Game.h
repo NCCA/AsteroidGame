@@ -25,7 +25,7 @@ class Game
     std::unique_ptr<ngl::Text> m_text;
     int m_score=0;
     GameState m_gameState=GameState::MainMenu;
-    int m_maxMissiles = 5;
+    int m_maxMissiles = 25;
 };
 
 
