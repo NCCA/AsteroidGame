@@ -13,27 +13,61 @@ Game::Game(int _arenaSize) : m_arenaSize{_arenaSize}
   m_ship.setPos(pos);
   RenderGlobals g(100);
   m_rocks.resize(5);
-
-
+  m_text = std::make_unique<ngl::Text>("fonts/Impact_Label.ttf",24);
+  m_text->setScreenSize(m_arenaSize,m_arenaSize);
 }
 
 void Game::draw() 
 {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  m_ship.draw();
-  for(auto r : m_rocks)
-    r.draw();
+  if(m_gameState == GameState::Playing)
+  {
+    m_ship.draw();
+    for(auto r : m_rocks)
+      r.draw();
+
+    m_text->setColour(1.0f,1.0f,0.0f);
+    m_text->renderText(10,370,fmt::format("Life {}",m_ship.getLife()));
+
+    m_text->renderText(290,370,fmt::format("Score {}",m_score));
+  }
+
+  else if( m_gameState == GameState::MainMenu)
+  {
+    m_text->renderText(10,200,"Press Space to play");
+  }
+  else if( m_gameState == GameState::GameOver)
+  {
+    m_text->renderText(10,100,fmt::format("Game Over score was {}",m_score));
+    m_text->renderText(10,200,"Press r to reset play");
+  }
+
 }
 
+void Game::changeGameState(GameState _state)
+{
+  if(m_gameState == GameState::GameOver && _state == GameState::MainMenu)
+  {
+    m_gameState=_state;
+    m_ship.resetShip();
+  }
+  else if( m_gameState == GameState::MainMenu)
+  {
+    m_gameState=_state;
+  }
+
+}
 void Game::update()
 {
-  m_ship.update();
-  for(auto &r : m_rocks)
-    r.update();
+  if(m_gameState == GameState::Playing)
+  {
+    m_ship.update();
+    for(auto &r : m_rocks)
+      r.update();
 
-  checkCollisions();
+    checkCollisions();
+  }
 }
-
 void Game::checkCollisions()
 {
   // get Ship Pos and Rad
@@ -48,7 +82,11 @@ void Game::checkCollisions()
     float minDist = srad+rrad;
     if(dist <=(minDist * minDist))
     {
-      std::cout<<"hit? \n";
+      m_ship.changeLife(-10);
+      if(m_ship.getLife()<=0)
+      {
+        m_gameState=GameState::GameOver;
+      }
     }
 
   }

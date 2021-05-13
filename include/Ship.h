@@ -14,10 +14,14 @@ class Ship
     void updateRotation(float _rotation);
     ngl::Vec3 getPos() const;
     float getRadius() const;
+    int getLife() const;
+    void changeLife(int _dLife);
+    void resetShip();
   private :
     ngl::Vec3 m_pos;
     float m_rot=0;
     float m_radius=1.0f;
+    int m_life=1000;
 
 };
 

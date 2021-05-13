@@ -30,6 +30,11 @@ float Ship::getRadius() const
   return m_radius;
 }
 
+void Ship::resetShip()
+{
+  m_life= 1000;
+}
+
 void Ship::draw()
 {
   ngl::ShaderLib::use(ngl::nglColourShader);
@@ -48,4 +53,14 @@ void Ship::draw()
 void Ship::update()
 {
 
+}
+
+
+int Ship::getLife() const
+{
+  return m_life;
+}
+void Ship::changeLife(int _dLife)
+{
+  m_life += _dLife;
 }

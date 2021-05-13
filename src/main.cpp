@@ -105,7 +105,12 @@ int main(int argc, char * argv[])
             break;
             case SDLK_LEFT : shipRotation = -1.0f; break;
             case SDLK_RIGHT : shipRotation = 1.0f; break;
-            case SDLK_g : SDL_SetWindowFullscreen(window,SDL_FALSE); break;
+            case SDLK_g : SDL_SetWindowFullscreen(window,SDL_FALSE)
+            ; break;
+            case SDLK_SPACE : game.changeGameState(Game::GameState::Playing); break;
+            case SDLK_r : game.changeGameState(Game::GameState::MainMenu); break;
+
+
             default : break;
           } // end of key process
         } // end of keydown
@@ -117,7 +122,7 @@ int main(int argc, char * argv[])
           {
             case SDLK_LEFT : shipRotation = 0.0f; break;
             case SDLK_RIGHT : shipRotation =0.0f; break;
-
+         
           }
         }
         break; // end key up;
