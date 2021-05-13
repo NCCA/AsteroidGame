@@ -4,6 +4,7 @@
 #include <ngl/VAOPrimitives.h>
 #include <ngl/Random.h>
 #include <iostream>
+#include <algorithm>
 Game::Game(int _arenaSize) : m_arenaSize{_arenaSize}
 {
   glClearColor(0.2f,0.2f,0.2f,1.0f);
@@ -25,6 +26,8 @@ void Game::draw()
     m_ship.draw();
     for(auto r : m_rocks)
       r.draw();
+    for(auto m : m_missile)
+      m.draw();
 
     m_text->setColour(1.0f,1.0f,0.0f);
     m_text->renderText(10,370,fmt::format("Life {}",m_ship.getLife()));
@@ -64,10 +67,59 @@ void Game::update()
     m_ship.update();
     for(auto &r : m_rocks)
       r.update();
+    for(auto &m : m_missile)
+      m.update();
 
     checkCollisions();
+     checkMissileCollisions();
+
   }
 }
+
+void Game::checkMissileCollisions()
+{
+  for(auto &m : m_missile)
+  {
+  auto mpos=m.getPos();
+  float mrad=2.0f;
+    for(auto r : m_rocks)
+    {
+      auto rpos = r.getPos();
+      auto rrad = r.getRadius();
+      float dist=(mpos - rpos).lengthSquared();
+      float minDist = mrad+rrad;
+      if(dist <=(minDist * minDist))
+      {
+        m_score++;
+        m.setDead();
+      }
+    }  
+  }
+
+  for(auto &m : m_missile)
+  {
+   int size=RenderGlobals::getSize();
+
+    auto p=m.getPos();
+    if( p.m_x <=-size || p.m_x >=size ||
+    p.m_y<=-size || p.m_y >= size )
+    {
+      m.setDead();
+    }
+  }
+
+
+  if(m_missile.size() !=0)
+  {
+    m_missile.erase(std::remove_if(std::begin(m_missile), std::end(m_missile),[](auto &m){ return !m.isAlive();} ),std::end(m_missile));
+  }
+
+
+
+}
+
+
+
 void Game::checkCollisions()
 {
   // get Ship Pos and Rad
@@ -91,6 +143,17 @@ void Game::checkCollisions()
 
   }
 
+}
+
+void Game::fire(bool _state)
+{
+  if(m_missile.size() <= m_maxMissiles)
+  {
+    if(_state == true)
+    {
+      m_missile.push_back(Missile(m_ship.getPos(), m_ship.getRotation()));
+    }
+  }
 }
 
 void Game::updateShip(float _rotation)

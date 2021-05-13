@@ -69,8 +69,8 @@ int main(int argc, char * argv[])
   bool quit=false;
   // sdl event processing data structure
   SDL_Event event;
-    float shipRotation=0.0f;
-
+  float shipRotation=0.0f;
+  bool fire=false;
   while(!quit) // the game loop
   {
     while ( SDL_PollEvent(&event) )
@@ -109,7 +109,7 @@ int main(int argc, char * argv[])
             ; break;
             case SDLK_SPACE : game.changeGameState(Game::GameState::Playing); break;
             case SDLK_r : game.changeGameState(Game::GameState::MainMenu); break;
-
+            case SDLK_a : fire =true; break;
 
             default : break;
           } // end of key process
@@ -122,7 +122,7 @@ int main(int argc, char * argv[])
           {
             case SDLK_LEFT : shipRotation = 0.0f; break;
             case SDLK_RIGHT : shipRotation =0.0f; break;
-         
+            case SDLK_a : fire =false; break;
           }
         }
         break; // end key up;
@@ -136,7 +136,7 @@ int main(int argc, char * argv[])
     game.updateShip(shipRotation);
     game.update();
     game.draw();
-
+    game.fire(fire);
     // swap the buffers
     SDL_GL_SwapWindow(window);
 

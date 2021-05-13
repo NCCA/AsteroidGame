@@ -17,6 +17,7 @@ class Ship
     int getLife() const;
     void changeLife(int _dLife);
     void resetShip();
+    float getRotation() const {return m_rot;}
   private :
     ngl::Vec3 m_pos;
     float m_rot=0;

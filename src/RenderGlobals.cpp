@@ -20,6 +20,7 @@ RenderGlobals::RenderGlobals(int _size)
     s_VPMatrix=s_projectMatrix*s_viewMatrix;
 
     ngl::VAOPrimitives::createSphere("rock",1.0f,4);
+    ngl::VAOPrimitives::createCapsule("missile",1.0f,2.0f,20);
 
   }
 }

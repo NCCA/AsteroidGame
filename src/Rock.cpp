@@ -73,8 +73,4 @@ void Rock::update()
   {
     reset();
   }
-
-
-
-
 }
