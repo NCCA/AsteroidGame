@@ -29,8 +29,10 @@ target_sources(${TargetName} PRIVATE
 ${PROJECT_SOURCE_DIR}/src/main.cpp  
 ${PROJECT_SOURCE_DIR}/src/Game.cpp  
 ${PROJECT_SOURCE_DIR}/src/Ship.cpp  
+${PROJECT_SOURCE_DIR}/src/RenderGlobals.cpp  
 ${PROJECT_SOURCE_DIR}/include/Game.h  
 ${PROJECT_SOURCE_DIR}/include/Ship.h
+${PROJECT_SOURCE_DIR}/include/RenderGlobals.h
 
 
 
