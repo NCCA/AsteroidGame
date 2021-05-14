@@ -25,8 +25,9 @@ void Missile::draw() const
   ngl::ShaderLib::use(ngl::nglColourShader);
   ngl::ShaderLib::setUniform("Colour",0.0f,1.0f,0.0f,1.0f);
   ngl::Transformation tx;
-  tx.setRotation(0,m_rot,90);
+  tx.setScale(8.0f,8.0f,8.0f);
+  tx.setRotation(0,180+m_rot,90);
   tx.setPosition(m_pos);
     ngl::ShaderLib::setUniform("MVP", RenderGlobals::getVPMatrix()* tx.getMatrix() );
-  ngl::VAOPrimitives::draw("missile");  
+  RenderGlobals::drawMesh("missile");
 }

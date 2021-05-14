@@ -42,7 +42,8 @@ void Rock::draw()
   tx.setScale(m_scale,1.0,m_scale);
   tx.setRotation(0,m_rotation,0);
   ngl::ShaderLib::setUniform("MVP", RenderGlobals::getVPMatrix()*tx.getMatrix());
-  ngl::VAOPrimitives::draw("rock");
+  //ngl::VAOPrimitives::draw("rock");
+  RenderGlobals::drawMesh("mediumRock");
 }
 void Rock::update()
 {

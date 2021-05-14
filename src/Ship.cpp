@@ -42,13 +42,14 @@ void Ship::draw()
   ngl::Transformation tx;
   tx.setPosition(m_pos);
   tx.setScale(4.0f,4.0f,4.0f);
-  tx.setRotation(0,m_rot,0);
+  tx.setRotation(0,180.0+m_rot,0);
   ngl::ShaderLib::setUniform("MVP", RenderGlobals::getVPMatrix()* tx.getMatrix() );
   // std::cout<<RenderGlobals::getVPMatrix()<<'\n';
   // std::cout<<RenderGlobals::getViewMatrix()<<'\n';
   // std::cout<<RenderGlobals::getProjectionMatrix()<<'\n';
 
-  ngl::VAOPrimitives::draw("teapot");
+  //ngl::VAOPrimitives::draw("teapot");
+  RenderGlobals::drawMesh("ship");
 }
 void Ship::update()
 {
