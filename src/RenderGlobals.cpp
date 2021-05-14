@@ -64,7 +64,11 @@ void RenderGlobals::loadMeshesFromfile()
 
 void RenderGlobals::drawMesh(const std::string &_name)
 {
-  s_models[_name]->draw();
+  auto mesh = s_models.find(_name);
+  if(mesh !=s_models.end())
+  {
+    mesh->second->draw();
+  }
 }
 
 
