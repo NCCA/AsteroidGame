@@ -1,0 +1,5 @@
+ship models/ship.obj
+missile models/missle.obj
+bigRock models/bigrock.obj
+mediumRock models/mediumrock.obj
+smallRock models/smallrock.obj

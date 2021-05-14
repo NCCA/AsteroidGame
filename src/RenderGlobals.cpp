@@ -2,6 +2,9 @@
 #include <ngl/Util.h>
 #include <iostream>
 #include <ngl/VAOPrimitives.h>
+#include <fstream>
+#include <string>
+
 
 int RenderGlobals::s_size=100;
 bool RenderGlobals::s_isInitialized=false;
@@ -23,21 +26,40 @@ RenderGlobals::RenderGlobals(int _size)
 
     ngl::VAOPrimitives::createSphere("rock",1.0f,4);
 
-    std::unique_ptr<ngl::Obj> ship = std::make_unique<ngl::Obj>("models/ship.obj");
-    ship->createVAO();
-    s_models["ship"] = std::move(ship);
-    std::unique_ptr<ngl::Obj> missile = std::make_unique<ngl::Obj>("models/missle.obj");
-    missile->createVAO();
-    s_models["missile"] = std::move(missile);
-
-
-    std::unique_ptr<ngl::Obj> mrock = std::make_unique<ngl::Obj>("models/mediumrock.obj");
-    mrock->createVAO();
-    s_models["mediumRock"] = std::move(mrock);
-
+    loadMeshesFromfile();
 
 
   }
+}
+
+void RenderGlobals::loadMeshesFromfile()
+{
+  std::fstream fileIn;
+	fileIn.open("models/models.txt");
+	if (!fileIn.is_open())
+	{
+		exit(EXIT_FAILURE);
+	}
+
+	std::string lineBuffer;
+  std::string model; 
+  std::string path;
+	while(!fileIn.eof())
+	{
+		getline(fileIn,lineBuffer,'\n');
+    auto space=lineBuffer.find(' ');
+    model = lineBuffer.substr(0,space);
+    path= lineBuffer.substr(space+1);
+    std::cout<<"Loading Mesh "<<model<<' '<<path<<'\n';
+
+    std::unique_ptr<ngl::Obj> mesh = std::make_unique<ngl::Obj>(path);
+    mesh->createVAO();
+    s_models[model] = std::move(mesh);
+	}
+	fileIn.close();
+
+
+
 }
 
 void RenderGlobals::drawMesh(const std::string &_name)

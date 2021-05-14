@@ -15,6 +15,7 @@ class RenderGlobals
     static int getSize() { return s_size;}
     static void drawMesh(const std::string &_name);
   private :
+    static void loadMeshesFromfile();
     static int s_size;
     static bool s_isInitialized;
     static ngl::Mat4 s_viewMatrix;
